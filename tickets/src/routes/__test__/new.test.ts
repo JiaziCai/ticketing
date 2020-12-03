@@ -1,0 +1,68 @@
+import request from "supertest";
+import { app } from "../../app";
+import { Ticket } from "../../models/ticket";
+
+it("listen router handler to /api/tickets for post requests", async () => {
+  const response = await request(app).post("/api/tickets").send({});
+
+  expect(response.status).not.toEqual(404);
+});
+
+it("can only be accessed if user is signed in", async () => {
+  const response = await request(app).post("/api/tickets").send({});
+
+  expect(response.status).toEqual(401);
+});
+
+it("return other than 401 if is signed in", async () => {
+  const response = await request(app)
+    .post("/api/tickets")
+    .set("Cookie", global.signin())
+    .send({});
+  expect(response.status).not.toEqual(401);
+});
+
+it("returns error if invalid title", async () => {
+  await request(app)
+    .post("/api/tickets")
+    .set("Cookie", global.signin())
+    .send({ title: "", price: 10 })
+    .expect(400);
+
+  await request(app)
+    .post("/api/tickets")
+    .set("Cookie", global.signin())
+    .send({ price: 10 })
+    .expect(400);
+});
+
+it("invalid price", async () => {
+  await request(app)
+    .post("/api/tickets")
+    .set("Cookie", global.signin())
+    .send({ title: "sssss", price: -10 })
+    .expect(400);
+
+  await request(app)
+    .post("/api/tickets")
+    .set("Cookie", global.signin())
+    .send({ title: "ssss" })
+    .expect(400);
+});
+
+it("creates a ticket", async () => {
+  let tickets = await Ticket.find({});
+  expect(tickets.length).toEqual(0);
+
+  const title = "asisnsis";
+  await request(app)
+    .post("/api/tickets")
+    .set("Cookie", global.signin())
+    .send({ title: "asisnsis", price: 20 })
+    .expect(201);
+
+  tickets = await Ticket.find({});
+  expect(tickets.length).toEqual(1);
+  expect(tickets[0].price).toEqual(20);
+  expect(tickets[0].title).toEqual(title);
+});
