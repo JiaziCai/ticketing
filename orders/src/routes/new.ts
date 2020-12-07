@@ -1,4 +1,4 @@
-import mongoose, { version } from "mongoose";
+import mongoose from "mongoose";
 import express, { Request, Response } from "express";
 import {
   requireAuth,
@@ -31,6 +31,13 @@ router.post(
   validateRequest,
   async (req: Request, res: Response) => {
     const { ticketId } = req.body;
+
+    const newTicket = Ticket.build({
+      title: "concert",
+      price: 20,
+      id: ticketId,
+    });
+    await newTicket.save();
 
     // Find the ticket the user is trying to order in the database
     const ticket = await Ticket.findById(ticketId);
