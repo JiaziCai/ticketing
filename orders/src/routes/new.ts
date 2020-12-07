@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { version } from "mongoose";
 import express, { Request, Response } from "express";
 import {
   requireAuth,
@@ -24,16 +24,17 @@ router.post(
     body("ticketId")
       .not()
       .isEmpty()
+      .trim()
       .custom((input: string) => mongoose.Types.ObjectId.isValid(input))
       .withMessage("TicketId must be provided"),
   ],
   validateRequest,
   async (req: Request, res: Response) => {
     const { ticketId } = req.body;
-    console.log(ticketId);
+
     // Find the ticket the user is trying to order in the database
     const ticket = await Ticket.findById(ticketId);
-    console.log(ticket);
+
     if (!ticket) {
       throw new NotFoundError();
     }

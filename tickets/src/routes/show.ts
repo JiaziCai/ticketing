@@ -1,5 +1,5 @@
-import { NotFoundError } from "@jcticket/common";
 import express, { Request, Response } from "express";
+import { NotFoundError } from "@jcticket/common";
 import { Ticket } from "../models/ticket";
 
 const router = express.Router();

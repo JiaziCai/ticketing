@@ -1,34 +1,36 @@
+import { Message } from "node-nats-streaming";
+import mongoose from "mongoose";
+import { OrderCreatedEvent, OrderStatus } from "@jcticket/common";
 import { OrderCreatedListener } from "../order-created-listener";
 import { natsWrapper } from "../../../nats-wrapper";
 import { Ticket } from "../../../models/ticket";
-import { OrderCreatedEvent, OrderStatus } from "@jcticket/common";
-import mongoose from "mongoose";
-import { Message } from "node-nats-streaming";
 
 const setup = async () => {
+  // Create an instance of the listener
   const listener = new OrderCreatedListener(natsWrapper.client);
 
+  // Create and save a ticket
   const ticket = Ticket.build({
-    title: "con123",
+    title: "concert",
     price: 99,
     userId: "asdf",
   });
-
   await ticket.save();
 
+  // Create the fake data event
   const data: OrderCreatedEvent["data"] = {
     id: mongoose.Types.ObjectId().toHexString(),
     version: 0,
     status: OrderStatus.Created,
-    userId: "asdf",
-    expiresAt: "adinindd",
+    userId: "alskdfj",
+    expiresAt: "alskdjf",
     ticket: {
       id: ticket.id,
       price: ticket.price,
     },
   };
 
-  //@ts-ignore
+  // @ts-ignore
   const msg: Message = {
     ack: jest.fn(),
   };
@@ -36,7 +38,7 @@ const setup = async () => {
   return { listener, ticket, data, msg };
 };
 
-it("sets the userid of the ticket", async () => {
+it("sets the userId of the ticket", async () => {
   const { listener, ticket, data, msg } = await setup();
 
   await listener.onMessage(data, msg);
