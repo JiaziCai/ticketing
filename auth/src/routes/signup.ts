@@ -1,8 +1,9 @@
 import express, { Request, Response } from "express";
 import { body } from "express-validator";
-import { BadRequestError, validateRequest } from "@jcticket/common";
-import { User, build } from "../models/user";
 import jwt from "jsonwebtoken";
+import { validateRequest, BadRequestError } from "@jcticket/common";
+
+import { User } from "../models/user";
 
 const router = express.Router();
 
@@ -25,7 +26,7 @@ router.post(
       throw new BadRequestError("Email in use");
     }
 
-    const user = build({ email, password });
+    const user = User.build({ email, password });
     await user.save();
 
     // Generate JWT
@@ -36,8 +37,8 @@ router.post(
       },
       process.env.JWT_KEY!
     );
-    //Store it
 
+    // Store it on session object
     req.session = {
       jwt: userJwt,
     };
