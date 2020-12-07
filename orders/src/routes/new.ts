@@ -30,9 +30,10 @@ router.post(
   validateRequest,
   async (req: Request, res: Response) => {
     const { ticketId } = req.body;
-
+    console.log(ticketId);
     // Find the ticket the user is trying to order in the database
     const ticket = await Ticket.findById(ticketId);
+    console.log(ticket);
     if (!ticket) {
       throw new NotFoundError();
     }

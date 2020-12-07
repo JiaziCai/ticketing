@@ -1,6 +1,6 @@
 import { natsWrapper } from "../../../nats-wrapper";
 import { OrderCancelledListener } from "../order-cancelled-listener";
-import { build, Ticket } from "../../../models/ticket";
+import { Ticket } from "../../../models/ticket";
 import mongoose from "mongoose";
 import { OrderCancelledEvent } from "@jcticket/common";
 import { Message } from "node-nats-streaming";
@@ -10,7 +10,7 @@ const setup = async () => {
 
   const orderId = mongoose.Types.ObjectId().toHexString();
 
-  const ticket = build({
+  const ticket = Ticket.build({
     title: "concert",
     price: 20,
     userId: "asdf",

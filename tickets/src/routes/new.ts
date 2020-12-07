@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import { requireAuth, validateRequest } from "@jcticket/common";
 import { body } from "express-validator";
-import { build } from "../models/ticket";
+import { Ticket } from "../models/ticket";
 import { TicketCreatedPublisher } from "../events/publishers/ticket-created-publish";
 import { natsWrapper } from "../nats-wrapper";
 
@@ -22,7 +22,7 @@ router.post(
   async (req: Request, res: Response) => {
     const { title, price } = req.body;
 
-    const ticket = build({
+    const ticket = Ticket.build({
       title,
       price,
       userId: req.currentUser!.id,

@@ -1,7 +1,7 @@
 import { Listener, OrderCancelledEvent, Subjects } from "@jcticket/common";
 import { queueGroupName } from "./queue-group-name";
 import { Message } from "node-nats-streaming";
-import { Ticket, build } from "../../models/ticket";
+import { Ticket } from "../../models/ticket";
 import { TicketUpdatedPublisher } from "../publishers/ticket-updated-publish";
 
 export class OrderCancelledListener extends Listener<OrderCancelledEvent> {

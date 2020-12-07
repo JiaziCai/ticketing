@@ -1,6 +1,6 @@
 import { OrderCreatedListener } from "../order-created-listener";
 import { natsWrapper } from "../../../nats-wrapper";
-import { Ticket, build } from "../../../models/ticket";
+import { Ticket } from "../../../models/ticket";
 import { OrderCreatedEvent, OrderStatus } from "@jcticket/common";
 import mongoose from "mongoose";
 import { Message } from "node-nats-streaming";
@@ -8,7 +8,7 @@ import { Message } from "node-nats-streaming";
 const setup = async () => {
   const listener = new OrderCreatedListener(natsWrapper.client);
 
-  const ticket = build({
+  const ticket = Ticket.build({
     title: "con123",
     price: 99,
     userId: "asdf",

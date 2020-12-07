@@ -1,7 +1,7 @@
-import { Ticket, build } from "../ticket";
+import { Ticket } from "../ticket";
 
 it("implements optimistic control", async (done) => {
-  const ticket = build({
+  const ticket = Ticket.build({
     title: "concert",
     price: 5,
     userId: "123",
@@ -26,7 +26,7 @@ it("implements optimistic control", async (done) => {
 });
 
 it("increments the version number on multiple saves", async () => {
-  const ticket = build({
+  const ticket = Ticket.build({
     title: "conert",
     price: 14,
     userId: "123",
