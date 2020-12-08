@@ -32,7 +32,7 @@ router.post(
   async (req: Request, res: Response) => {
     const { ticketId } = req.body;
 
-    // Find the ticket the user is trying to order in the database
+    // Find the ticket the user is trying to order in the database!!!
     const ticket = await Ticket.findById(ticketId);
 
     if (!ticket) {
@@ -44,7 +44,7 @@ router.post(
       throw new BadRequestError("Ticket is already reserved");
     }
 
-    // Calculate an expiration date for this order
+    // Calculate an expiration date for this order!
     const expiration = new Date();
     expiration.setSeconds(expiration.getSeconds() + EXPIRATION_WINDOW_SECONDS);
 
