@@ -33,6 +33,10 @@ router.post(
     const { ticketId } = req.body;
 
     // Find the ticket the user is trying to order in the database
+    const allTicket = await Ticket.find({});
+
+    console.log("Now fetching all tickets");
+    console.log("Alltickets", allTicket);
     const ticket = await Ticket.findById(ticketId);
 
     if (!ticket) {
