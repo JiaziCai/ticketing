@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { app } from "./app";
 
 const start = async () => {
-  console.log("Starting up auth service...");
+  console.log("Starting up auth service.....");
 
   if (!process.env.MONGO_URI) {
     throw new Error("MONGO_URI must be defined");
