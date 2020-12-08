@@ -6,7 +6,7 @@
   "scripts": {
     "start": "ts-node-dev src/index.ts",
     "test": "jest --watchAll --no-cache",
-    "postinstall": "patch-package"
+    "postinstall": "npx patch-package"
   },
   "jest": {
     "preset": "ts-jest",
