@@ -1,7 +1,7 @@
 import useRequest from "../../hooks/use-request";
 import Router from "next/router";
 
-const TicketShow = ({ ticket }) => {
+const TicketShow = ({ ticket, currentUser }) => {
   const { doRequest, errors } = useRequest({
     url: "/api/orders",
     method: "post",
@@ -26,7 +26,6 @@ const TicketShow = ({ ticket }) => {
 TicketShow.getInitialProps = async (context, client) => {
   const { ticketId } = context.query;
   const { data } = await client.get(`/api/tickets/${ticketId}`);
-
   return { ticket: data };
 };
 export default TicketShow;

@@ -21,6 +21,9 @@ router.put(
     body("price")
       .isFloat({ gt: 0 })
       .withMessage("Price must be provided and must be greater than 0"),
+    body("image").not().isEmpty().withMessage("Image is required"),
+    body("location").not().isEmpty().withMessage("Location is required"),
+    body("date").not().isEmpty().withMessage("Date is required"),
   ],
   validateRequest,
   async (req: Request, res: Response) => {
@@ -41,6 +44,9 @@ router.put(
     ticket.set({
       title: req.body.title,
       price: req.body.price,
+      image: req.body.image,
+      location: req.body.location,
+      date: req.body.date,
     });
     await ticket.save();
     new TicketUpdatedPublisher(natsWrapper.client).publish({
@@ -49,6 +55,9 @@ router.put(
       price: ticket.price,
       userId: ticket.userId,
       version: ticket.version,
+      image: ticket.image,
+      location: ticket.location,
+      date: ticket.date,
     });
 
     res.send(ticket);

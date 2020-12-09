@@ -9,5 +9,8 @@ export interface TicketUpdatedEvent {
     price: number;
     userId: string;
     orderId?: string;
+    image: string;
+    location: string;
+    date: string;
   };
 }

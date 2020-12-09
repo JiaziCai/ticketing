@@ -1,14 +1,18 @@
 const OrderIndex = ({ orders }) => {
+  console.log("orders", orders);
   return (
-    <ul>
-      {orders.map((order) => {
-        return (
-          <li key={order.id}>
-            {order.ticket.title} - {order.status}
-          </li>
-        );
-      })}
-    </ul>
+    <>
+      <ul>
+        {orders.map((order) => {
+          return (
+            <li key={order.id}>
+              {order.ticket.title} - {order.status}
+            </li>
+          );
+        })}
+      </ul>
+      {orders.length == 0 && <h1>You don't have any orders</h1>}
+    </>
   );
 };
 

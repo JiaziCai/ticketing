@@ -1,24 +1,24 @@
-import React, { useState, useEffect } from "react";
-import useRequest from "../../hooks/use-request";
+import useRequest from "../../../hooks/use-request";
 import Router from "next/router";
+import { useState, useEffect } from "react";
 
-const NewTicket = () => {
-  const [title, setTitle] = useState("");
-  const [price, setPrice] = useState("");
+const TicketUpdate = ({ ticket }) => {
+  const [title, setTitle] = useState(ticket.title);
+  const [price, setPrice] = useState(ticket.price);
   const [image, setImage] = useState(null);
-  const [location, setLocation] = useState("");
-  const [date, setDate] = useState("");
-  const [src, setSrc] = useState(null);
+  const [location, setLocation] = useState(ticket.location);
+  const [date, setDate] = useState(ticket.date);
+  const [src, setSrc] = useState("");
 
   const { doRequest, errors } = useRequest({
-    url: "/api/tickets",
-    method: "post",
+    url: `/api/tickets/${ticket.id}`,
+    method: "put",
     body: {
       title,
       price,
+      date,
       image: src,
       location,
-      date,
     },
     onSuccess: () => Router.push("/"),
   });
@@ -48,7 +48,7 @@ const NewTicket = () => {
   };
   return (
     <div>
-      <h1>Create a ticket</h1>
+      <h1>Edit a ticket</h1>
       <form onSubmit={onSubmit}>
         <div className='form-group'>
           <label htmlFor=''>Title</label>
@@ -76,7 +76,6 @@ const NewTicket = () => {
             className='form-control'
           />
         </div>
-
         <div>
           <img
             src={image ? src : null}
@@ -103,4 +102,10 @@ const NewTicket = () => {
   );
 };
 
-export default NewTicket;
+TicketUpdate.getInitialProps = async (context, client) => {
+  const { ticketId } = context.query;
+  const { data } = await client.get(`/api/tickets/${ticketId}`);
+  console.log("data", data);
+  return { ticket: data };
+};
+export default TicketUpdate;
