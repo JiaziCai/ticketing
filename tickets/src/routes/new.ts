@@ -15,15 +15,21 @@ router.post(
     body("price")
       .isFloat({ gt: 0 })
       .withMessage("Price must be greater than 0"),
+    body("image").not().isEmpty().withMessage("Image is required"),
+    body("location").not().isEmpty().withMessage("Location is required"),
+    body("date").not().isEmpty().withMessage("Date is required"),
   ],
   validateRequest,
   async (req: Request, res: Response) => {
-    const { title, price } = req.body;
+    const { title, price, image, location, date } = req.body;
 
     const ticket = await Ticket.build({
       title,
       price,
       userId: req.currentUser!.id,
+      image,
+      location,
+      date,
     });
     await ticket.save();
 
@@ -33,6 +39,9 @@ router.post(
       price: ticket.price,
       userId: ticket.userId,
       version: ticket.version,
+      image: ticket.image,
+      location: ticket.location,
+      date: ticket.date,
     });
 
     res.status(201).send(ticket);
