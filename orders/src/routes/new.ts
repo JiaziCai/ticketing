@@ -67,6 +67,9 @@ router.post(
       ticket: {
         id: ticket.id,
         price: ticket.price,
+        image: ticket.image,
+        location: ticket.location,
+        date: ticket.date,
       },
     });
 
