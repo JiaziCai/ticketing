@@ -7,6 +7,9 @@ export interface TicketCreatedEvent {
     version: number;
     title: string;
     price: number;
+    location: string;
+    image: string;
+    date: string;
     userId: string;
   };
 }
