@@ -12,6 +12,9 @@ export interface OrderCreatedEvent {
     ticket: {
       id: string;
       price: number;
+      image: string;
+      location: string;
+      date: string;
     };
   };
 }
