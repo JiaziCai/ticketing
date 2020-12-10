@@ -18,10 +18,19 @@ router.post(
     body("image").not().isEmpty().withMessage("Image is required"),
     body("location").not().isEmpty().withMessage("Location is required"),
     body("date").not().isEmpty().withMessage("Date is required"),
+    body("description").not().isEmpty().withMessage("Description is required"),
   ],
   validateRequest,
   async (req: Request, res: Response) => {
-    const { title, price, image, location, date } = req.body;
+    const {
+      title,
+      price,
+      image,
+      location,
+      date,
+      description,
+      owner,
+    } = req.body;
 
     const ticket = await Ticket.build({
       title,
@@ -30,6 +39,8 @@ router.post(
       image,
       location,
       date,
+      description,
+      owner,
     });
     await ticket.save();
 
@@ -42,6 +53,8 @@ router.post(
       image: ticket.image,
       location: ticket.location,
       date: ticket.date,
+      description: ticket.description,
+      owner: ticket.owner,
     });
 
     res.status(201).send(ticket);

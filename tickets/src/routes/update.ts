@@ -24,6 +24,7 @@ router.put(
     body("image").not().isEmpty().withMessage("Image is required"),
     body("location").not().isEmpty().withMessage("Location is required"),
     body("date").not().isEmpty().withMessage("Date is required"),
+    body("description").not().isEmpty().withMessage("Description is required"),
   ],
   validateRequest,
   async (req: Request, res: Response) => {
@@ -47,6 +48,8 @@ router.put(
       image: req.body.image,
       location: req.body.location,
       date: req.body.date,
+      description: req.body.description,
+      owner: req.body.owner,
     });
     await ticket.save();
     new TicketUpdatedPublisher(natsWrapper.client).publish({
@@ -58,6 +61,8 @@ router.put(
       image: ticket.image,
       location: ticket.location,
       date: ticket.date,
+      description: ticket.description,
+      owner: ticket.owner,
     });
 
     res.send(ticket);

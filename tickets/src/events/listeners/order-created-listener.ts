@@ -32,6 +32,8 @@ export class OrderCreatedListener extends Listener<OrderCreatedEvent> {
       orderId: ticket.orderId,
       version: ticket.version,
       date: ticket.date,
+      description: ticket.description,
+      owner: ticket.owner,
     });
 
     // ack the message
