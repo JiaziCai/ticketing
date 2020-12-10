@@ -12,5 +12,6 @@ export interface TicketCreatedEvent {
     location: string;
     date: string;
     description: string;
+    owner: string;
   };
 }
