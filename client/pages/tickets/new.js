@@ -4,7 +4,7 @@ import Router from "next/router";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const NewTicket = () => {
+const NewTicket = ({ currentUser }) => {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [image, setImage] = useState(null);
