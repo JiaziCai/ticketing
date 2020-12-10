@@ -12,5 +12,6 @@ export interface TicketUpdatedEvent {
     owner: string;
     image: string;
     orderId?: string;
+    userId: string;
   };
 }
