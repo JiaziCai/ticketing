@@ -24,3 +24,5 @@ export * from "./events/order-cancelled-event";
 export * from "./events/expiration-complete-event";
 
 export * from "./events/payment-created-event";
+
+console.log("this is the index import page");
