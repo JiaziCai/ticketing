@@ -1,55 +1,38 @@
 import Link from "next/link";
+import RecipeReviewCard from "../components/card";
 
 const LandingPage = ({ currentUser, tickets }) => {
   const ticketList = tickets.map((ticket) => {
     return (
-      <tr key={ticket.id}>
-        <td>{ticket.title}</td>
-        <td>{ticket.date}</td>
-        <td>{ticket.price}</td>
-        <td>
-          <img
-            src={ticket.image}
-            alt={ticket.image.name}
-            height='300px'
-            width='400px'
-          />
-        </td>
-        <td>{ticket.location}</td>
-        <td>
-          {currentUser !== null && ticket.userId === currentUser.id ? (
-            <Link
-              href='/tickets/edit/[ticketId]'
-              as={`/tickets/edit/${ticket.id}`}
-            >
-              <a>Edit</a>
-            </Link>
-          ) : (
-            <Link href='/tickets/[ticketId]' as={`/tickets/${ticket.id}`}>
-              <a>View</a>
-            </Link>
-          )}
-        </td>
-      </tr>
+      <div key={ticket.id} className='col-lg-4 col-md-6 col-sm-12 mb-4'>
+        <RecipeReviewCard
+          key={ticket.id}
+          title={ticket.title}
+          date={ticket.date}
+          price={ticket.price}
+          image={ticket.image}
+          location={ticket.location}
+          description={ticket.description}
+          owner={ticket.owner}
+          link={
+            currentUser !== null && ticket.userId === currentUser.id
+              ? "/tickets/edit/[ticketId]"
+              : "/tickets/[ticketId]"
+          }
+          as={
+            currentUser !== null && ticket.userId === currentUser.id
+              ? `/tickets/edit/${ticket.id}`
+              : `/tickets/${ticket.id}`
+          }
+        />
+      </div>
     );
   });
   return (
-    <div>
+    <>
       <h1>Tickets</h1>
-      <table className='table'>
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Date</th>
-            <th>Price</th>
-            <th>Image</th>
-            <th>Location</th>
-            <th>Link</th>
-          </tr>
-        </thead>
-        <tbody>{ticketList}</tbody>
-      </table>
-    </div>
+      <div className='row'>{ticketList}</div>
+    </>
   );
 };
 

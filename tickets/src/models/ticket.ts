@@ -7,6 +7,8 @@ interface TicketAttrs {
   userId: string;
   image: string;
   location: string;
+  description: string;
+  owner: string;
   date: string;
 }
 
@@ -17,6 +19,8 @@ interface TicketDoc extends mongoose.Document {
   version: number;
   image: string;
   location: string;
+  description: string;
+  owner: string;
   date: string;
   orderId?: string;
 }
@@ -50,7 +54,15 @@ const ticketSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    description: {
+      type: String,
+      required: true,
+    },
     date: {
+      type: String,
+      required: true,
+    },
+    owner: {
       type: String,
       required: true,
     },

@@ -2,6 +2,7 @@ import useRequest from "../../hooks/use-request";
 import Router from "next/router";
 
 const TicketShow = ({ ticket, currentUser }) => {
+  console.log("EDIT", currentUser);
   const { doRequest, errors } = useRequest({
     url: "/api/orders",
     method: "post",
@@ -14,7 +15,12 @@ const TicketShow = ({ ticket, currentUser }) => {
   return (
     <div>
       <h1>{ticket.title}</h1>
+      <h4>Date: {ticket.date}</h4>
+      <h4>Owner: {ticket.owner}</h4>
       <h4>Price: {ticket.price}</h4>
+      <img src={ticket.image} alt={ticket.title} height='300px' width='400px' />
+      <h4>Location: {ticket.location}</h4>
+      <h4>Description: {ticket.description}</h4>
       {errors}
       <button onClick={() => doRequest()} className='btn btn-primary'>
         Purchase

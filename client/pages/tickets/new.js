@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
 import useRequest from "../../hooks/use-request";
 import Router from "next/router";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
-const NewTicket = () => {
+const NewTicket = ({ currentUser }) => {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [image, setImage] = useState(null);
   const [location, setLocation] = useState("");
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState(new Date());
   const [src, setSrc] = useState(null);
-
+  const [description, setDescription] = useState("");
+  const owner = currentUser.username;
   const { doRequest, errors } = useRequest({
     url: "/api/tickets",
     method: "post",
@@ -18,7 +21,9 @@ const NewTicket = () => {
       price,
       image: src,
       location,
+      description,
       date,
+      owner,
     },
     onSuccess: () => Router.push("/"),
   });
@@ -59,12 +64,11 @@ const NewTicket = () => {
           />
         </div>
         <div className='form-group'>
-          <label htmlFor=''>Date</label>
-          <input
-            value={date}
-            onBlur={onBlur}
-            onChange={(e) => setDate(e.target.value)}
-            className='form-control'
+          <DatePicker
+            selected={date}
+            onChange={(date) => setDate(date)}
+            // minDate={moment().toDate()}
+            placeholderText='Select a day'
           />
         </div>
         <div className='form-group'>
@@ -93,6 +97,15 @@ const NewTicket = () => {
             value={location}
             onBlur={onBlur}
             onChange={(e) => setLocation(e.target.value)}
+            className='form-control'
+          />
+        </div>
+        <div className='form-group'>
+          <label htmlFor=''>Description</label>
+          <input
+            value={description}
+            onBlur={onBlur}
+            onChange={(e) => setDescription(e.target.value)}
             className='form-control'
           />
         </div>
