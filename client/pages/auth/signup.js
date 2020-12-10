@@ -5,10 +5,11 @@ import Router from "next/router";
 export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
   const { doRequest, errors } = useRequest({
     url: "/api/users/signup",
     method: "post",
-    body: { email, password },
+    body: { email, password, username },
     onSuccess: () => {
       Router.push("/");
     },
@@ -37,6 +38,15 @@ export default function SignUp() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           type='password'
+          className='form-control'
+        />
+      </div>
+      <div className='form-group'>
+        <label htmlFor=''>Username</label>
+        <input
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          type='text'
           className='form-control'
         />
       </div>

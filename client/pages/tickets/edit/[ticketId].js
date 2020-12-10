@@ -2,13 +2,15 @@ import useRequest from "../../../hooks/use-request";
 import Router from "next/router";
 import { useState, useEffect } from "react";
 
-const TicketUpdate = ({ ticket }) => {
+const TicketUpdate = ({ ticket, currentUser }) => {
   const [title, setTitle] = useState(ticket.title);
   const [price, setPrice] = useState(ticket.price);
   const [image, setImage] = useState(null);
   const [location, setLocation] = useState(ticket.location);
   const [date, setDate] = useState(ticket.date);
   const [src, setSrc] = useState("");
+  const [description, setDescription] = useState(ticket.description);
+  const owner = currentUser.username;
 
   const { doRequest, errors } = useRequest({
     url: `/api/tickets/${ticket.id}`,
@@ -19,6 +21,8 @@ const TicketUpdate = ({ ticket }) => {
       date,
       image: src,
       location,
+      description,
+      owner,
     },
     onSuccess: () => Router.push("/"),
   });
@@ -92,6 +96,15 @@ const TicketUpdate = ({ ticket }) => {
             value={location}
             onBlur={onBlur}
             onChange={(e) => setLocation(e.target.value)}
+            className='form-control'
+          />
+        </div>
+        <div className='form-group'>
+          <label htmlFor=''>Description</label>
+          <input
+            value={description}
+            onBlur={onBlur}
+            onChange={(e) => setDescription(e.target.value)}
             className='form-control'
           />
         </div>

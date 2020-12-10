@@ -12,5 +12,7 @@ export interface TicketUpdatedEvent {
     image: string;
     location: string;
     date: string;
+    description: string;
+    owner: string;
   };
 }
