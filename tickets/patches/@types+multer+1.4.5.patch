@@ -1,0 +1,19 @@
+diff --git a/node_modules/@types/multer/index.d.ts b/node_modules/@types/multer/index.d.ts
+index 129fc3e..17dd596 100644
+--- a/node_modules/@types/multer/index.d.ts
++++ b/node_modules/@types/multer/index.d.ts
+@@ -44,12 +44,14 @@ declare global {
+                 path: string;
+                 /** `MemoryStorage` only: A Buffer containing the entire file. */
+                 buffer: Buffer;
++                location: any;
+             }
+         }
+ 
+         interface Request {
+             /** `Multer.File` object populated by `single()` middleware. */
+             file: Multer.File;
++
+             /**
+              * Array or dictionary of `Multer.File` object populated by `array()`,
+              * `fields()`, and `any()` middleware.

@@ -3,6 +3,7 @@ import useRequest from "../../hooks/use-request";
 import Router from "next/router";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import axios from "axios";
 
 const NewTicket = ({ currentUser }) => {
   const [title, setTitle] = useState("");
@@ -28,8 +29,22 @@ const NewTicket = ({ currentUser }) => {
     onSuccess: () => Router.push("/"),
   });
 
-  const imageHandler = (e) => {
-    setImage(e.target.files[0]);
+  const imageHandler = async (e) => {
+    const file = e.target.files[0];
+    const bodyFormData = new FormData();
+    bodyFormData.append("image", file);
+    await axios
+      .post("/s3", bodyFormData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        setImage(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   useEffect(() => {
